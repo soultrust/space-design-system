@@ -4,7 +4,7 @@ import data from '@/data.json'
 const TechnologyPage = () => {
   return (
     <>
-      <div className="bg-container technology"></div>
+      <div className="bg-container bg-container--technology"></div>
       <main id="main" className="grid-container grid-container--tech flow">
         <h1 className="numbered-title">
           <span aria-hidden="true">03</span> Space Launch 101

@@ -1,7 +1,7 @@
 export default function Home() {
   return (
     <>
-      <div className="bg-container home"></div>
+      <div className="bg-container bg-container--home"></div>
       <main className="grid-container grid-container--home">
         <div>
           <h1 className="text-accent fs-500 ff-sans-cond uppercase letter-spacing-1">

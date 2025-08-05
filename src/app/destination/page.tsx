@@ -4,7 +4,7 @@ import data from '@/data.json'
 const DestinationPage = () => {
   return (
     <>
-      <div className="bg-container destination"></div>
+      <div className="bg-container bg-container--destination"></div>
       <main
         id="main"
         className="grid-container grid-container--destination flow"

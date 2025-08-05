@@ -20,14 +20,13 @@ const CrewTabs = ({ data }) => {
         <img src={`/crew/image-${currMember.slug}.png`} alt={currMember.name} />
       </picture>
       <div className="dot-indicators flex" role="tablist" aria-label="crew">
-        {members.map(({ name, slug }, i) => {
+        {members.map(({ name, slug }) => {
           return (
             <button
-              aria-selected="false"
+              aria-selected={`${activeTab === slug}`}
               role="tab"
               aria-controls={`${slug}-tab`}
-              className={`${activeTab === name.toLowerCase() ? 'active ' : ''}uppercase ff-sans-cond text-accent letter-spacing-2`}
-              tabIndex={`${i === 0} ? '0' : '-1'`}
+              className={`${activeTab === slug ? 'active ' : ''}uppercase ff-sans-cond text-accent letter-spacing-2`}
               data-image={`${slug}-image`}
               onClick={() => setActiveTab(slug)}
               key={slug}
@@ -43,10 +42,16 @@ const CrewTabs = ({ data }) => {
         tabIndex="0"
         role="tabpanel"
       >
-        <h3>{currMember.role}</h3>
-        <h2 className="fs-600 uppercase ff-serif">{currMember.name}</h2>
+        <header className="flow flow--space-small">
+          <h3 className="ff-serif uppercase">{currMember.role}</h3>
+          <h2 className="fs-700 uppercase ff-serif text-white m-8">
+            {currMember.name}
+          </h2>
+        </header>
 
-        <div className="crew-description flex">{currMember.bio}</div>
+        <div className="crew-description flex text-accent">
+          {currMember.bio}
+        </div>
       </article>
     </>
   )

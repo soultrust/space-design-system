@@ -475,7 +475,7 @@ select {
   background-color: hsl(var(--clr-white) / 0.5);
 }
 
-.dot-indicators > [aria-selected='true'] {
+.dot-indicators > .active {
   background-color: hsl(var(--clr-white) / 1);
 }
 
@@ -513,17 +513,18 @@ select {
   top: 0px;
   z-index: -1;
 }
-.bg-container.home {
+.bg-container--home {
   background-position: bottom center;
   background-image: url(/home/background-home-mobile.jpg);
 }
-.bg-container.destination {
+.bg-container--destination {
   background-image: url(/destination/background-destination-mobile.jpg);
 }
-.bg-container.crew {
-  background-image: url(/home/background-crew-mobile.jpg);
+.bg-container--crew {
+  background-position: bottom center;
+  background-image: url(/crew/background-crew-mobile.jpg);
 }
-.bg-container.technology {
+.bg-container--technology {
   background-image: url(/technology/background-technology-mobile.jpg);
 }
 
@@ -547,16 +548,16 @@ select {
 }
 
 @media (min-width: 45rem) {
-  .bg-container.home {
+  .bg-container--home {
     background-image: url(/home/background-home-desktop.jpg);
   }
-  .bg-container.destination {
+  .bg-container--destination {
     background-image: url(/destination/background-destination-desktop.jpg);
   }
-  .bg-container.crew {
+  .bg-container--crew {
     background-image: url(/crew/background-crew-desktop.jpg);
   }
-  .bg-container.technology {
+  .bg-container--technology {
     background-image: url(/technology/background-technology-desktop.jpg);
   }
 }
@@ -624,7 +625,7 @@ select {
   grid-template-areas:
     'title'
     'image'
-    'tabs'
+    'dots'
     'content';
 }
 
@@ -638,11 +639,11 @@ select {
   grid-area: dots;
 }
 
-.grid-container--crew > .crew-details {
+.crew-details {
   grid-area: content;
 }
 
-.crew-details h2 {
+.crew-details h3 {
   color: hsl(var(--clr-white) / 0.5);
 }
 
@@ -668,7 +669,7 @@ select {
     grid-template-areas:
       'title'
       'content'
-      'tabs'
+      'dots'
       'image';
   }
 }
@@ -705,7 +706,8 @@ select {
       '. image content .';
   }
 
-  .grid-container--destination > picture {
+  .grid-container--destination > picture,
+  .grid-container--crew > picture {
     max-width: 90%;
   }
 
