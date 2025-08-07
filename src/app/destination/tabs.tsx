@@ -6,8 +6,8 @@ const DestinationTabs = ({ data }) => {
   const [activeTab, setActiveTab] = useState('moon')
   const destinations = data.destinations
   const tabListRef = useRef(null)
-  let tabFocus = 0
   let tabs
+  let tabFocus = 0
 
   useEffect(() => {
     tabs = tabListRef.current.querySelectorAll('[role="tab"]')
@@ -56,7 +56,6 @@ const DestinationTabs = ({ data }) => {
         role="tablist"
         aria-label="destination list"
         ref={tabListRef}
-        onKeyDown={handleKeyDown}
       >
         {destinations.map(({ name }, i) => {
           const current = name.toLowerCase()
@@ -69,6 +68,7 @@ const DestinationTabs = ({ data }) => {
               className={`${activeTab === name.toLowerCase() ? 'active ' : ''}uppercase ff-sans-cond text-accent letter-spacing-2`}
               data-image={`${current}-image`}
               onClick={() => setActiveTab(current)}
+              onKeyDown={handleKeyDown}
               key={current}
             >
               {name}
