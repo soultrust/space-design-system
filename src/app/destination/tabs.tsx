@@ -1,14 +1,43 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
 const DestinationTabs = ({ data }) => {
   const [activeTab, setActiveTab] = useState('moon')
   const destinations = data.destinations
+  const tabListRef = useRef(null)
+  let tabFocus = 0
+  let tabs
+
+  useEffect(() => {
+    tabs = tabListRef.current.querySelectorAll('[role="tab"]')
+  }, [])
 
   const currDestination = destinations.find(
     (dest) => dest.name.toLowerCase() === activeTab,
   )
+
+  const handleKeyDown = (e) => {
+    const keydownLeft = 37
+    const keydownRight = 39
+    if (e.keyCode === keydownLeft || e.keyCode === keydownRight) {
+      tabs[tabFocus].setAttribute('tabindex', -1)
+    }
+    if (e.keyCode === keydownRight) {
+      tabFocus++
+      if (tabFocus >= tabs.length) {
+        tabFocus = 0
+      }
+    }
+    if (e.keyCode === keydownLeft) {
+      tabFocus--
+      if (tabFocus < 0) {
+        tabFocus = tabs.length - 1
+      }
+    }
+    tabs[tabFocus].setAttribute('tabindex', 0)
+    tabs[tabFocus].focus()
+  }
 
   return (
     <>
@@ -26,6 +55,8 @@ const DestinationTabs = ({ data }) => {
         className="tab-list underline-indicators flex"
         role="tablist"
         aria-label="destination list"
+        ref={tabListRef}
+        onKeyDown={handleKeyDown}
       >
         {destinations.map(({ name }, i) => {
           const current = name.toLowerCase()
@@ -36,7 +67,6 @@ const DestinationTabs = ({ data }) => {
               role="tab"
               aria-controls={`${current}-tab`}
               className={`${activeTab === name.toLowerCase() ? 'active ' : ''}uppercase ff-sans-cond text-accent letter-spacing-2`}
-              tabIndex={`${i === 0} ? '0' : '-1'`}
               data-image={`${current}-image`}
               onClick={() => setActiveTab(current)}
               key={current}
