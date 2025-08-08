@@ -744,7 +744,3 @@ select {
     grid-area: image;
   }
 }
-
-[role='tab']:focus {
-  color: limegreen;
-}

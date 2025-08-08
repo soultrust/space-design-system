@@ -6,7 +6,6 @@ const DestinationTabs = ({ data }) => {
   const [activeTab, setActiveTab] = useState('moon')
   const destinations = data.destinations
   const tabListRef = useRef(null)
-  // let tabs = null
   let tabFocus = 0
   const tabs = useRef([])
 
@@ -19,7 +18,7 @@ const DestinationTabs = ({ data }) => {
   )
 
   const handleTabClick = (current, index) => {
-    tabFocus = index - 1
+    // tabFocus = 3
     setActiveTab(current)
   }
 
@@ -28,23 +27,22 @@ const DestinationTabs = ({ data }) => {
     const keydownRight = 39
 
     if (e.keyCode === keydownLeft || e.keyCode === keydownRight) {
-      console.log(tabs.current[tabFocus])
       tabs.current[tabFocus].setAttribute('tabindex', -1)
-    }
-    if (e.keyCode === keydownRight) {
-      tabFocus++
-      if (tabFocus >= tabs.current.length) {
-        tabFocus = 0
+
+      if (e.keyCode === keydownRight) {
+        tabFocus++
+        if (tabFocus >= tabs.current.length) {
+          tabFocus = 0
+        }
+      } else {
+        tabFocus--
+        if (tabFocus < 0) {
+          tabFocus = tabs.current.length - 1
+        }
       }
+      tabs.current[tabFocus].setAttribute('tabindex', 0)
+      tabs.current[tabFocus].focus()
     }
-    if (e.keyCode === keydownLeft) {
-      tabFocus--
-      if (tabFocus < 0) {
-        tabFocus = tabs.current.length - 1
-      }
-    }
-    tabs.current[tabFocus].setAttribute('tabindex', 0)
-    tabs.current[tabFocus].focus()
   }
 
   return (
