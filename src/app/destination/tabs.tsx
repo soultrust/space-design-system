@@ -6,37 +6,45 @@ const DestinationTabs = ({ data }) => {
   const [activeTab, setActiveTab] = useState('moon')
   const destinations = data.destinations
   const tabListRef = useRef(null)
-  let tabs
+  // let tabs = null
   let tabFocus = 0
+  const tabs = useRef([])
 
   useEffect(() => {
-    tabs = tabListRef.current.querySelectorAll('[role="tab"]')
+    tabs.current = tabListRef.current.querySelectorAll('[role="tab"]')
   }, [])
 
   const currDestination = destinations.find(
     (dest) => dest.name.toLowerCase() === activeTab,
   )
 
+  const handleTabClick = (current, index) => {
+    tabFocus = index - 1
+    setActiveTab(current)
+  }
+
   const handleKeyDown = (e) => {
     const keydownLeft = 37
     const keydownRight = 39
+
     if (e.keyCode === keydownLeft || e.keyCode === keydownRight) {
-      tabs[tabFocus].setAttribute('tabindex', -1)
+      console.log(tabs.current[tabFocus])
+      tabs.current[tabFocus].setAttribute('tabindex', -1)
     }
     if (e.keyCode === keydownRight) {
       tabFocus++
-      if (tabFocus >= tabs.length) {
+      if (tabFocus >= tabs.current.length) {
         tabFocus = 0
       }
     }
     if (e.keyCode === keydownLeft) {
       tabFocus--
       if (tabFocus < 0) {
-        tabFocus = tabs.length - 1
+        tabFocus = tabs.current.length - 1
       }
     }
-    tabs[tabFocus].setAttribute('tabindex', 0)
-    tabs[tabFocus].focus()
+    tabs.current[tabFocus].setAttribute('tabindex', 0)
+    tabs.current[tabFocus].focus()
   }
 
   return (
@@ -62,12 +70,12 @@ const DestinationTabs = ({ data }) => {
 
           return (
             <button
-              aria-selected="false"
+              aria-selected={activeTab === name.toLowerCase()}
               role="tab"
               aria-controls={`${current}-tab`}
               className={`${activeTab === name.toLowerCase() ? 'active ' : ''}uppercase ff-sans-cond text-accent letter-spacing-2`}
               data-image={`${current}-image`}
-              onClick={() => setActiveTab(current)}
+              onClick={() => handleTabClick(current, i)}
               onKeyDown={handleKeyDown}
               key={current}
             >
